@@ -106,7 +106,7 @@ body {
 
 .nav-link.active {
   color: #c4aaf0;
-  background: rgba(123, 53, 212, 0.18);
+  background: #271b5a;
   border-color: rgba(155, 106, 178, 0.25);
 }
 
@@ -126,9 +126,8 @@ body {
 }
 
 .nav-logout:hover {
-  border-color: rgba(239, 68, 68, 0.35);
-  color: rgba(255, 100, 100, 0.85);
-  background: rgba(239, 68, 68, 0.06);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #ff6464;
 }
 
 /* ── Page Layout ─────────────────────────────────────── */

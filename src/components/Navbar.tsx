@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LogOut, LayoutDashboard, BookOpen } from 'lucide-react';
 
-function ShamrockIcon({ size = 26 }: { size?: number }) {
+function ShamrockIcon({ size = 26 }: Readonly<{ size?: number }>) {
   return (
     <svg
       width={size}
