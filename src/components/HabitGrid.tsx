@@ -22,8 +22,8 @@ const DEMO_HABITS = [
   { name: 'Meditation', daysOn: [1,2,4,6,8,10,12,14,16,18,20,22,24] },
   { name: 'Water (2L)', daysOn: [1,2,3,4,5,6,7,8,9,10,11,12,14,15,16,17,18,19,21,22,23,24] },
 ];
-const DEMO_WEIGHT = [70.2,69.8,70.1,69.5,69.8,70.3,70.0,69.7,69.4,70.0,69.6,70.2,69.9,69.5,70.1];
-const DEMO_SLEEP  = [7.5,6.0,8.0,7.0,6.5,7.5,8.0,6.0,7.5,8.0,7.0,6.5,7.5,8.0,7.5];
+const DEMO_WEIGHT = [70.2,69.8,70.1,69.5,69.8,70.3,70,69.7,69.4,70,69.6,70.2,69.9,69.5,70.1];
+const DEMO_SLEEP  = [7.5,6,8,7,6.5,7.5,8,6,7.5,8,7,6.5,7.5,8,7.5];
 
 const STICKY_BG = '#251e55';
 
@@ -107,32 +107,37 @@ export default function HabitGrid() {
     }
   };
 
+  const seedHabits = async (yr: number, mo: number, maxDay: number) => {
+    for (const def of DEMO_HABITS) {
+      let habitId: number;
+      try {
+        const res = await api.post('/habit/habits', { name: def.name, description: '' });
+        habitId = res.data.id;
+      } catch { continue; }
+      for (const day of def.daysOn) {
+        if (day > maxDay) { continue; }
+        const d = `${yr}-${String(mo + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        try { await api.post(`/habit/habits/${habitId}/logs/${d}`, { is_done: true, note: '' }); } catch { /* skip */ }
+      }
+    }
+  };
+
+  const seedMetrics = async (yr: number, mo: number, maxDay: number) => {
+    for (let i = 0; i < Math.min(DEMO_WEIGHT.length, maxDay); i++) {
+      const d = `${yr}-${String(mo + 1).padStart(2, '0')}-${String(i + 1).padStart(2, '0')}`;
+      try { await api.post(`/habit/metrics/${d}`, { metric_type: 'weight', value: DEMO_WEIGHT[i] }); } catch { /* skip */ }
+      try { await api.post(`/habit/metrics/${d}`, { metric_type: 'sleep', value: DEMO_SLEEP[i] }); } catch { /* skip */ }
+    }
+  };
+
   const seedDemoData = async () => {
     setSeeding(true);
     try {
       const yr = today.getFullYear();
       const mo = today.getMonth();
       const maxDay = today.getDate();
-
-      for (const def of DEMO_HABITS) {
-        let habitId: number;
-        try {
-          const res = await api.post('/habit/habits', { name: def.name, description: '' });
-          habitId = res.data.id;
-        } catch { continue; }
-        for (const day of def.daysOn) {
-          if (day > maxDay) continue;
-          const d = `${yr}-${String(mo + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-          try { await api.post(`/habit/habits/${habitId}/logs/${d}`, { is_done: true, note: '' }); } catch { /* skip */ }
-        }
-      }
-
-      for (let i = 0; i < Math.min(DEMO_WEIGHT.length, maxDay); i++) {
-        const d = `${yr}-${String(mo + 1).padStart(2, '0')}-${String(i + 1).padStart(2, '0')}`;
-        try { await api.post(`/habit/metrics/${d}`, { metric_type: 'weight', value: DEMO_WEIGHT[i] }); } catch { /* skip */ }
-        try { await api.post(`/habit/metrics/${d}`, { metric_type: 'sleep', value: DEMO_SLEEP[i] }); } catch { /* skip */ }
-      }
-
+      await seedHabits(yr, mo, maxDay);
+      await seedMetrics(yr, mo, maxDay);
       fetchHabits();
     } catch (err) {
       console.error(err);

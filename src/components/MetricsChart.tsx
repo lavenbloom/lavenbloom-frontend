@@ -60,7 +60,7 @@ export default function MetricsChart() {
   };
 
   const confirmAddMetricType = () => {
-    const key = newMetricName.trim().toLowerCase().replace(/\s+/g, '_');
+    const key = newMetricName.trim().toLowerCase().replaceAll(/\s+/g, '_');
     if (!key || allMetrics.some(m => m.value === key)) { setAddingMetric(false); setNewMetricName(''); return; }
     const updated = [...customMetrics, { value: key, label: newMetricName.trim() }];
     setCustomMetrics(updated);
@@ -90,7 +90,7 @@ export default function MetricsChart() {
                 placeholder="Metric name…"
                 value={newMetricName}
                 onChange={e => setNewMetricName(e.target.value)}
-                onKeyDown={e => { if (e.key === 'Enter') confirmAddMetricType(); if (e.key === 'Escape') { setAddingMetric(false); setNewMetricName(''); } }}
+                onKeyDown={e => { if (e.key === 'Enter') { confirmAddMetricType(); } else if (e.key === 'Escape') { setAddingMetric(false); setNewMetricName(''); } }}
                 style={{ width: '140px', padding: '0.4rem 0.6rem', fontSize: '0.875rem' }}
               />
               <button onClick={confirmAddMetricType} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#7b35d4', display: 'flex', alignItems: 'center', padding: '0.25rem' }}>
