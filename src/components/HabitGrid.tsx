@@ -48,8 +48,8 @@ export default function HabitGrid() {
       if (e.key === 'ArrowLeft') goToPrevMonth();
       else if (e.key === 'ArrowRight') goToNextMonth();
     };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
+    globalThis.addEventListener('keydown', handleKey);
+    return () => globalThis.removeEventListener('keydown', handleKey);
   }, [goToPrevMonth, goToNextMonth]);
 
   useEffect(() => {
