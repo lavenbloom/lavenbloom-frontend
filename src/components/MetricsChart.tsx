@@ -60,7 +60,7 @@ export default function MetricsChart() {
   };
 
   const confirmAddMetricType = () => {
-    const key = newMetricName.trim().toLowerCase().replaceAll(/\s+/g, '_');
+    const key = newMetricName.trim().toLowerCase().split(/\s+/).join('_');
     if (!key || allMetrics.some(m => m.value === key)) { setAddingMetric(false); setNewMetricName(''); return; }
     const updated = [...customMetrics, { value: key, label: newMetricName.trim() }];
     setCustomMetrics(updated);
