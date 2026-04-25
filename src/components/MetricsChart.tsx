@@ -42,7 +42,6 @@ export default function MetricsChart() {
         <select 
           value={metricType} 
           onChange={e => setMetricType(e.target.value)}
-          style={{ background: 'rgba(0,0,0,0.3)', color: 'white', border: '1px solid var(--panel-border)', padding: '0.5rem', borderRadius: '8px' }}
         >
           <option value="weight">Weight</option>
           <option value="sleep">Sleep Hours</option>
@@ -65,14 +64,15 @@ export default function MetricsChart() {
         {data.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-              <XAxis dataKey="date" stroke="var(--text-secondary)" fontSize={12} />
-              <YAxis stroke="var(--text-secondary)" fontSize={12} domain={['auto', 'auto']} />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(155,106,178,0.12)" />
+              <XAxis dataKey="date" stroke="var(--text-secondary)" fontSize={11} tickLine={false} />
+              <YAxis stroke="var(--text-secondary)" fontSize={11} domain={['auto', 'auto']} tickLine={false} axisLine={false} />
               <Tooltip 
-                contentStyle={{ background: 'var(--bg-color)', border: '1px solid var(--panel-border)', borderRadius: '8px' }}
-                itemStyle={{ color: 'var(--accent-color)' }}
+                contentStyle={{ background: '#251e55', border: '1px solid rgba(155,106,178,0.3)', borderRadius: '10px', boxShadow: '0 8px 24px rgba(29,18,80,0.5)' }}
+                itemStyle={{ color: '#c4aaf0' }}
+                labelStyle={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}
               />
-              <Line type="monotone" dataKey="value" stroke="var(--accent-color)" strokeWidth={3} dot={{ r: 4, fill: 'var(--bg-color)' }} activeDot={{ r: 6 }} />
+              <Line type="monotone" dataKey="value" stroke="#9b6ab2" strokeWidth={2.5} dot={{ r: 4, fill: '#1c1642', stroke: '#9b6ab2', strokeWidth: 2 }} activeDot={{ r: 6, fill: '#c4aaf0' }} />
             </LineChart>
           </ResponsiveContainer>
         ) : (

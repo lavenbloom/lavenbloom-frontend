@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../utils/api';
-import { LogIn } from 'lucide-react';
+
+function ShamrockIcon() {
+  return (
+    <svg width="52" height="60" viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="22" r="21" fill="#9b6ab2" />
+      <circle cx="27" cy="52" r="21" fill="#9b6ab2" />
+      <circle cx="73" cy="52" r="21" fill="#9b6ab2" />
+      <ellipse cx="50" cy="42" rx="15" ry="15" fill="#9b6ab2" />
+      <path d="M50 62 Q48 78 44 94" stroke="#9b6ab2" strokeWidth="6" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -30,11 +41,11 @@ export default function Login() {
     <div className="auth-container">
       <div className="glass-panel auth-card">
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <LogIn size={48} color="var(--accent-color)" />
-          <h2 style={{ marginTop: '1rem' }}>Welcome Back</h2>
-          <p style={{ color: 'var(--text-secondary)' }}>Sign in to continue tracking.</p>
+          <ShamrockIcon />
+          <h2 style={{ marginTop: '1rem', fontSize: '1.5rem', fontWeight: 700, background: 'linear-gradient(135deg, #c4aaf0, #9b6ab2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Welcome Back</h2>
+          <p style={{ color: 'var(--text-secondary)', marginTop: '0.35rem', fontSize: '0.9rem' }}>Sign in to continue tracking.</p>
         </div>
-        {error && <div style={{ color: 'var(--danger)', marginBottom: '1rem', textAlign: 'center' }}>{error}</div>}
+        {error && <div style={{ color: 'var(--danger)', marginBottom: '1rem', textAlign: 'center', fontSize: '0.9rem' }}>{error}</div>}
         <form onSubmit={handleLogin}>
           <div className="form-group">
             <label>Username</label>
@@ -48,8 +59,8 @@ export default function Login() {
             Sign In
           </button>
         </form>
-        <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem' }}>
-          Don't have an account? <Link to="/register" style={{ color: 'var(--accent-color)' }}>Register here</Link>
+        <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+          Don't have an account?{' '}<Link to="/register" style={{ color: '#c4aaf0', textDecoration: 'none', fontWeight: 500 }}>Register here</Link>
         </p>
       </div>
     </div>
